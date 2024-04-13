@@ -214,6 +214,32 @@ class _CartViewState extends State<CartView> {
                             shoe: Cart.shoes[index],
                             onDelete: () {
                               Cart.shoes.remove(Cart.shoes[index]);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color:
+                                                  context.colorScheme.onSurface,
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          padding: const EdgeInsets.all(16),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                'Item deleted from cart',
+                                                style: context
+                                                    .textTheme.bodyLarge!
+                                                    .copyWith(
+                                                        color: context
+                                                            .colorScheme
+                                                            .surface),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ));
                               setState(() {});
                             },
                           ))

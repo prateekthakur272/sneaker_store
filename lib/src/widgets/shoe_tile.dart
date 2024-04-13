@@ -64,6 +64,27 @@ class ShoeTile extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 onPressed: () {
                   Cart.shoes.add(shoe);
+                  showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: context.colorScheme.onSurface,
+                                  borderRadius: BorderRadius.circular(8)),
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Item added to cart',
+                                    style: context.textTheme.bodyLarge!
+                                        .copyWith(
+                                            color: context.colorScheme.surface),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ));
                   log(Cart.shoes.toString());
                 },
                 icon: const Icon(Icons.add),
