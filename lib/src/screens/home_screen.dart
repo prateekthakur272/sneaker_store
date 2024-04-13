@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shoes_repository/shoes_repository.dart';
 import 'package:sneaker_store/src/build_context_extension.dart';
 import 'package:sneaker_store/src/constants/spaces.dart';
+import 'package:sneaker_store/src/widgets/cart_tile.dart';
 import 'package:sneaker_store/src/widgets/shoe_tile.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -99,10 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }),
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: const [ShopView(), CartView()],
-      ),
+      body: [const ShopView(), const CartView()][_selectedIndex],
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(24.0),
         child: GNav(
@@ -195,11 +192,38 @@ class ShopView extends StatelessWidget {
   }
 }
 
-class CartView extends StatelessWidget {
+class CartView extends StatefulWidget {
   const CartView({super.key});
 
   @override
+  State<CartView> createState() => _CartViewState();
+}
+
+class _CartViewState extends State<CartView> {
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: SafeArea(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Cart.shoes.isNotEmpty
+                  ? ListView.separated(
+                      separatorBuilder: (context, index) => space16,
+                      itemCount: Cart.shoes.length,
+                      itemBuilder: (context, index) => CartTile(
+                            shoe: Cart.shoes[index],
+                            onDelete: () {
+                              Cart.shoes.remove(Cart.shoes[index]);
+                              setState(() {});
+                            },
+                          ))
+                  : Center(
+                      child: Text(
+                        'There is nothing in your bag',
+                        style: context.textTheme.headlineMedium!
+                            .copyWith(color: context.colorScheme.secondary),
+                      ),
+                    ))),
+    );
   }
 }

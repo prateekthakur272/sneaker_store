@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shoes_repository/shoes_repository.dart';
 import 'package:sneaker_store/src/build_context_extension.dart';
 
@@ -61,7 +62,10 @@ class ShoeTile extends StatelessWidget {
               IconButton(
                 iconSize: 32,
                 padding: const EdgeInsets.all(16),
-                onPressed: () {},
+                onPressed: () {
+                  Cart.shoes.add(shoe);
+                  log(Cart.shoes.toString());
+                },
                 icon: const Icon(Icons.add),
                 style: IconButton.styleFrom(
                     shape: const RoundedRectangleBorder(
